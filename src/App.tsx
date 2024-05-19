@@ -1,26 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { TopBar } from "./components/TopBar";
+import { Legend } from "./components/Legend";
+import Calendar from "./components/Calendar";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div>
+            <TopBar player={{ name: "Alex", color: "Black" }} isAdmin={true} />
+            <div className='content' style={{ display: "flex" }}>
+                <Legend players={[{ name: "Petur", color: "Gay" }, { name: "Nasko", color: "GayAsWell" }]} />
+                <Calendar />
+            </div>
+        </div>
+    );
 }
 
 export default App;
