@@ -1,8 +1,11 @@
-const Note = () => {
+interface Props {
+    isOpen: boolean;
+}
+const Note = (props: Props) => {
+
     return (
-        <div>
-            Note
-        </div>
+        <>
+        </>
     )
 }
 

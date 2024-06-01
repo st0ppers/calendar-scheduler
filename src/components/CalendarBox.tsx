@@ -2,8 +2,6 @@ interface Props {
     day: Date;
     changeCurrentDay: (day: Date) => void;
     setNotesModeal: (isOpen:boolean) => void;
-    // setStartDate: (date: number) => void;
-    // setEndDate: (date: number) => void;
 }
 
 const CalendarBox = (props: Props) => {

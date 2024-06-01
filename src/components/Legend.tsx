@@ -1,16 +1,16 @@
-import { Player } from "../models/Player";
-interface Props {
-    players: Player[];
-}
+import { observer } from "mobx-react";
+import { useState } from "../internal/ContextProvider";
 
-export const Legend = (props: Props) => {
+const Legend = () => {
+    const { getPlayers } = useState();
+
     return (
-        <div style={{ borderStyle: "solid", borderColor: "black", width: "200px", height: "700px", padding:"15px"}}>
+        <div style={{ borderStyle: "solid", borderColor: "black", width: "200px", height: "700px", padding: "15px" }}>
             {
-                props.players.map((player, index) => {
-                        return (
-                            <div key={index} style={{ display: "flex", justifyContent: "space-between" }}>
-                                <p>{player.name} - {player.color}</p>
+                getPlayers.map((player, index) => {
+                    return (
+                        <div key={index} style={{ display: "flex", justifyContent: "space-between" }}>
+                            <p>{player.name} - {player.color}</p>
                         </div>
                     )
                 })
@@ -19,3 +19,4 @@ export const Legend = (props: Props) => {
     )
 }
 
+export default observer(Legend);

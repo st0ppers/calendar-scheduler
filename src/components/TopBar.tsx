@@ -1,17 +1,17 @@
-import { Player } from "../models/Player";
-interface Props {
-    player: Player;
-    isAdmin: boolean;
-}
+import { observer } from "mobx-react";
+import { useState } from "../internal/ContextProvider";
 
-export const TopBar = (props: Props) => {
+const TopBar = () => {
     const month = new Date().toLocaleString('default', { month: 'long' });
+    const { getCurrentPlayer } = useState();
+
     return (
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <p>{props.player.name} - {props.player.color}</p>
+            <p>{getCurrentPlayer.name} - {getCurrentPlayer.color}</p>
             <p style={{ fontSize: "32px" }}>{month}</p>
-            <button>Logout</button>
+            <button onClick={() => console.log(getCurrentPlayer)}>Logout</button>
         </div>
     )
 }
 
+export default observer(TopBar);

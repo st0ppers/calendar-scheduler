@@ -25,10 +25,8 @@ const Calendar = () => {
                 </div>
                 <CalendarBox day={currentDay} changeCurrentDay={setCurrentDay} setNotesModeal={setIsNotesOpen} />
             </div>
-            <button onClick={() => {
 
-            }
-            }>Print</button>
+            <button onClick={() => { }}>Print</button>
         </>
     )
 }
