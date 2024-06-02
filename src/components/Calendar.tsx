@@ -1,12 +1,11 @@
-import { useState } from "react";
+import { observer } from "mobx-react";
+import { useState } from "../internal/ContextProvider";
 import CalendarBox from "./CalendarBox";
 
 const Calendar = () => {
-
-    const [currentDay, setCurrentDay] = useState(new Date());
     const weekdays: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const [isNotesOpen, setIsNotesOpen] = useState(false);
 
+    const { updateCurrentPlayerFreeTime } = useState();
     return (
         <>
             <div style={{ width: "100%", flexGrow: "1", display: "flex", flexDirection: "column" }}>
@@ -23,12 +22,13 @@ const Calendar = () => {
                         })
                     }
                 </div>
-                <CalendarBox day={currentDay} changeCurrentDay={setCurrentDay} setNotesModeal={setIsNotesOpen} />
+                <CalendarBox />
             </div>
 
-            <button onClick={() => { }}>Print</button>
+            <button onClick={updateCurrentPlayerFreeTime}
+            >Submit</button>
         </>
     )
 }
 
-export default Calendar;
+export default observer(Calendar);
