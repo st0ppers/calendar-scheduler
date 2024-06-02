@@ -9,7 +9,7 @@ const TopBar = () => {
         <div style={{ display: "flex", justifyContent: "space-between" }}>
             <p>{getCurrentPlayer.name} - {getCurrentPlayer.color}</p>
             <p style={{ fontSize: "32px" }}>{month}</p>
-            <button onClick={() => console.log(getCurrentPlayer)}>Logout</button>
+            <button onClick={()=>{}}>Logout</button>
         </div>
     )
 }

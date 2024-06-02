@@ -1,5 +1,8 @@
-export interface Player{
+import { FreeTime } from "./FreeTime";
+
+export interface Player {
     name: string;
     color: string;
-    //Maybe add isAdmin
+    freeTime: FreeTime;
 }
+
