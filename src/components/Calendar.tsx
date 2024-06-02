@@ -5,7 +5,7 @@ import CalendarBox from "./CalendarBox";
 const Calendar = () => {
     const weekdays: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-    const { getStartDate, getEndDate } = useState();
+    const { getStartDate, getEndDate, updateCurrentPlayerFreeTime, getPlayers } = useState();
     return (
         <>
             <div style={{ width: "100%", flexGrow: "1", display: "flex", flexDirection: "column" }}>
@@ -26,9 +26,10 @@ const Calendar = () => {
             </div>
 
             <button onClick={() => {
-                console.log("Start Date: ", getStartDate.day);
-                console.log("End Date: ", getEndDate.day);
-            }}>Print</button>
+                updateCurrentPlayerFreeTime();
+
+            }}
+            >Submit</button>
         </>
     )
 }

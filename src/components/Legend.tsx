@@ -5,7 +5,7 @@ const Legend = () => {
     const { getPlayers } = useState();
 
     return (
-        <div style={{ borderStyle: "solid", borderColor: "black", width: "200px", height: "700px", padding: "15px" }}>
+        <div style={{ borderStyle: "solid", borderColor: "black", width: "200px", height: "fit-content", padding: "15px" }}>
             {
                 getPlayers.map((player, index) => {
                     return (

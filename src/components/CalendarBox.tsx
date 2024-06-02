@@ -1,6 +1,7 @@
 import CalendarDate from "./CalendarDate";
 import { Day } from "../models/Day";
 import { useState } from "../internal/ContextProvider";
+import { observer } from "mobx-react";
 
 const CalendarBox = () => {
     const currentDay = new Date();
@@ -37,23 +38,24 @@ const CalendarBox = () => {
             {
                 currentDays.map((day, index) => {
 
-                    if (getStartDate.index === index && getStartDate.day === day.number) {
-                        return (
-                            <CalendarDate key={index} index={index} day={day} color={getCurrentPlayer.color} />
-                        )
-                    }
+                    // if (getStartDate.index === index && getStartDate.day === day.number) {
+                    //     return (
+                    //         <CalendarDate key={index} index={index} day={day} color={getCurrentPlayer.color} />
+                    //     )
+                    // }
 
-                    if (getEndDate.index === index && getEndDate.day === day.number) {
-                        return (
-                            <CalendarDate key={index} index={index} day={day} color={getCurrentPlayer.color} />
-                        )
-                    }
+                    // if (getEndDate.index === index && getEndDate.day === day.number) {
+                    //     return (
+                    //         <CalendarDate key={index} index={index} day={day} color={getCurrentPlayer.color} />
+                    //     )
+                    // }
 
-                    if (index >= getStartDate.index && index <= getEndDate.index) {
-                        return (
-                            <CalendarDate key={index} index={index} day={day} color={getCurrentPlayer.color} />
-                        )
-                    }
+                    // if (index >= getStartDate.index && index <= getEndDate.index) {
+                    //     return (
+                    //         <CalendarDate key={index} index={index} day={day} color={getCurrentPlayer.color} />
+                    //     )
+                    // }
+
 
                     return (
                         <CalendarDate key={index} index={index} day={day} color={day.currentMonth ? "white" : "lightgrey"} />
@@ -64,5 +66,5 @@ const CalendarBox = () => {
     )
 }
 
-export default CalendarBox;
+export default observer(CalendarBox);
 

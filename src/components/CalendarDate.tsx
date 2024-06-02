@@ -10,18 +10,34 @@ interface Props {
 }
 
 const CalendarDate = (props: Props) => {
-    const { setEndDate, setStartDate, getIsStartDateSelected, setIsStartDateSelected } = useState();
+    const { getPlayers, setEndDate, setStartDate, getIsStartDateSelected, setIsStartDateSelected } = useState();
 
     const handleClick = (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>, index: number) => {
         const target = event.target as HTMLParagraphElement;
         const textContent = Number(target.textContent);
 
         if (!getIsStartDateSelected) {
-            setStartDate({ day: textContent, index: index });
+            setStartDate({
+                currentMonth: props.day.currentMonth,
+                date: props.day.date,
+                month: props.day.month,
+                number: textContent,
+                selected: props.day.selected,
+                year: props.day.year,
+                index: index
+            });
             setIsStartDateSelected(true);
         }
         else {
-            setEndDate({ day: textContent, index: index });
+            setEndDate({
+                currentMonth: props.day.currentMonth,
+                date: props.day.date,
+                month: props.day.month,
+                number: textContent,
+                selected: props.day.selected,
+                year: props.day.year,
+                index: index
+            });
             setIsStartDateSelected(false);
         }
     };
@@ -38,9 +54,25 @@ const CalendarDate = (props: Props) => {
             <p style={{ textAlign: "center", padding: "0px", margin: "0px" }}>
                 {props.day.number}
             </p>
-            <SelectionLine day={props.day} color={props.color} />
+
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100px', flexWrap: "wrap" }}>
+                {getPlayers.map((player, index) => {
+                    if (props.day.date >= player.freeTime.from && props.day.date <= player.freeTime.to) {
+                        if (player.name === "Alex") {
+                            console.log(player.freeTime.from, player.freeTime.to);
+                            console.log(props.day.date);
+                        }
+                        return (
+                            <SelectionLine key={index} color={player.color} />
+                        )
+                    }
+
+                    return (
+                        <SelectionLine key={index} color={props.day.currentMonth ? "white" : "lightgrey"} />
+                    )
+                })}
+            </div>
         </div>
     )
 }
-
 export default observer(CalendarDate);

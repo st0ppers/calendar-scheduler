@@ -1,20 +1,16 @@
-import { Day } from "../models/Day";
+import { observer } from "mobx-react";
 
 interface Props {
-    day: Day;
     color: string;
 }
 
 const SelectionLine = (props: Props) => {
     return (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100px' }}>
-            <div style={{
-                width: '100%',
-                height: '1px',
-                backgroundColor: props.color
-            }} />
-        </div>
+        <div style={{
+            width: '100%',
+            height: '3px',
+            backgroundColor: props.color
+        }} />
     )
 }
-
-export default SelectionLine;
+export default observer(SelectionLine);
