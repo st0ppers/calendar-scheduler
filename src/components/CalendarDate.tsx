@@ -11,7 +11,6 @@ interface Props {
 
 const CalendarDate = (props: Props) => {
     const { setEndDate, setStartDate, getIsStartDateSelected, setIsStartDateSelected } = useState();
-    const { getStartDate, getEndDate } = useState();
 
     const handleClick = (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>, index: number) => {
         const target = event.target as HTMLParagraphElement;
@@ -25,9 +24,6 @@ const CalendarDate = (props: Props) => {
             setEndDate({ day: textContent, index: index });
             setIsStartDateSelected(false);
         }
-
-        console.log("StartDay: condition: ", getStartDate.index === index);
-        console.log("EndDay: condition: ", getEndDate.index === index);
     };
 
     return (
