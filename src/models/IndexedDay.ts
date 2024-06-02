@@ -1,4 +1,4 @@
-export interface DayIndex {
+export interface IndexedDay {
     index: number;
     day: number;
 }

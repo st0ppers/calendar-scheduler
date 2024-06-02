@@ -5,7 +5,7 @@ interface Props {
     color: string;
 }
 
-const Line = (props: Props) => {
+const SelectionLine = (props: Props) => {
     return (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100px' }}>
             <div style={{
@@ -17,4 +17,4 @@ const Line = (props: Props) => {
     )
 }
 
-export default Line;
+export default SelectionLine;

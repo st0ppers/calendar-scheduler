@@ -1,7 +1,7 @@
 import { computed, action, observable, makeObservable, runInAction } from "mobx";
-import { DayIndex } from "../models/DayIndex";
-import { DefaultDayIndex } from "../models/defaultValues/DayIndex";
-import { DefaultPlayer } from "../models/defaultValues/Player";
+import { IndexedDay } from "../models/IndexedDay";
+import { DefaultIndexedDay } from "../models/defaultValues/DefaultIndexedDay";
+import { DefaultPlayer } from "../models/defaultValues/DefaultPlayer";
 import { Player } from "../models/Player";
 import IRetriever from "../retriever/Retriever";
 
@@ -9,14 +9,14 @@ export class State {
     @observable private players: Player[];
     @observable private curentPlayer: Player;
     @observable private isStartDateSelected: boolean;
-    @observable private startDate: DayIndex;
-    @observable private endDate: DayIndex;
+    @observable private startDate: IndexedDay;
+    @observable private endDate: IndexedDay;
     private readonly retriever: IRetriever;
 
     public constructor(retriever: IRetriever) {
         makeObservable(this);
-        this.startDate = DefaultDayIndex;
-        this.endDate = DefaultDayIndex;
+        this.startDate = DefaultIndexedDay;
+        this.endDate = DefaultIndexedDay;
         this.isStartDateSelected = false;
         this.players = [];
         this.curentPlayer = DefaultPlayer;
@@ -40,12 +40,12 @@ export class State {
     }
 
     @computed
-    get getStartDate(): DayIndex {
+    get getStartDate(): IndexedDay {
         return this.startDate;
     }
 
     @computed
-    get getEndDate(): DayIndex {
+    get getEndDate(): IndexedDay {
         return this.endDate;
     }
 
@@ -54,11 +54,11 @@ export class State {
         this.isStartDateSelected = value;
     }
 
-    @action public setStartDate = (date: DayIndex) => {
+    @action public setStartDate = (date: IndexedDay ) => {
         this.startDate = date;
     }
 
-    @action public setEndDate = (date: DayIndex) => {
+    @action public setEndDate = (date: IndexedDay ) => {
         this.endDate = date;
     }
 

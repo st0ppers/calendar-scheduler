@@ -8,7 +8,7 @@ const CalendarBox = () => {
     const weekdayOfFirstDay = firstDayOfMonth.getDay();
     let currentDays: Day[] = [];
 
-    const { getStartDate, getEndDate, getCurrentPlayer } = useState();//TODO: Delte later
+    const { getStartDate, getEndDate, getCurrentPlayer } = useState();
 
     for (let day = 0; day < 42; day++) {
         if (day === 0 && weekdayOfFirstDay === 0) {
@@ -29,7 +29,6 @@ const CalendarBox = () => {
             index: day
         }
 
-        //console.log(calendarDay);
         currentDays.push(calendarDay);
     }
 
@@ -59,23 +58,6 @@ const CalendarBox = () => {
                     return (
                         <CalendarDate key={index} index={index} day={day} color={day.currentMonth ? "white" : "lightgrey"} />
                     )
-
-                    // return (
-                    //     <div key={index}
-                    //         onClick={handleClick}
-                    //         style={{
-                    //             width: "14.28%",
-                    //             height: "14.28%",
-                    //             // height: "fit-content",
-                    //             border: "1px solid black",
-                    //             boxSizing: "border-box",
-                    //             backgroundColor: day.currentMonth ? "white" : "lightgrey"
-                    //         }}>
-                    //         <p style={{ textAlign: "center", padding: "0px", margin: "0px" }}>
-                    //             {day.number}
-                    //         </p>
-                    //     </div>
-                    // )
                 })
             }
         </div>
