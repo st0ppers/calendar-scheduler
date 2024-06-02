@@ -10,7 +10,7 @@ interface Props {
 }
 
 const CalendarDate = (props: Props) => {
-    const { getPlayers, setEndDate, setStartDate, getIsStartDateSelected, setIsStartDateSelected } = useState();
+    const { getPlayers, setEndDate, setStartDate, getIsStartDateSelected } = useState();
 
     const handleClick = (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>, index: number) => {
         const target = event.target as HTMLParagraphElement;
@@ -26,7 +26,6 @@ const CalendarDate = (props: Props) => {
                 year: props.day.year,
                 index: index
             });
-            setIsStartDateSelected(true);
         }
         else {
             setEndDate({
@@ -38,7 +37,6 @@ const CalendarDate = (props: Props) => {
                 year: props.day.year,
                 index: index
             });
-            setIsStartDateSelected(false);
         }
     };
 
@@ -57,11 +55,12 @@ const CalendarDate = (props: Props) => {
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100px', flexWrap: "wrap" }}>
                 {getPlayers.map((player, index) => {
+
+                    if(props.day.date === null) {
+                        return null;
+                    }
+
                     if (props.day.date >= player.freeTime.from && props.day.date <= player.freeTime.to) {
-                        if (player.name === "Alex") {
-                            console.log(player.freeTime.from, player.freeTime.to);
-                            console.log(props.day.date);
-                        }
                         return (
                             <SelectionLine key={index} color={player.color} />
                         )

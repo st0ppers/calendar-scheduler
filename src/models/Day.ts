@@ -1,6 +1,6 @@
 export interface Day {
     currentMonth: boolean;
-    date: Date;
+    date: Date | null;
     month: number;
     number: number;
     selected: boolean;

@@ -1,6 +1,5 @@
 import CalendarDate from "./CalendarDate";
 import { Day } from "../models/Day";
-import { useState } from "../internal/ContextProvider";
 import { observer } from "mobx-react";
 
 const CalendarBox = () => {
@@ -8,8 +7,6 @@ const CalendarBox = () => {
     const firstDayOfMonth = new Date(currentDay.getFullYear(), currentDay.getMonth(), 1);
     const weekdayOfFirstDay = firstDayOfMonth.getDay();
     let currentDays: Day[] = [];
-
-    const { getStartDate, getEndDate, getCurrentPlayer } = useState();
 
     for (let day = 0; day < 42; day++) {
         if (day === 0 && weekdayOfFirstDay === 0) {
@@ -37,26 +34,6 @@ const CalendarBox = () => {
         <div style={{ width: "100%", flexGrow: "1", display: "flex", flexWrap: "wrap", justifyContent: "center", boxSizing: "border-box" }}>
             {
                 currentDays.map((day, index) => {
-
-                    // if (getStartDate.index === index && getStartDate.day === day.number) {
-                    //     return (
-                    //         <CalendarDate key={index} index={index} day={day} color={getCurrentPlayer.color} />
-                    //     )
-                    // }
-
-                    // if (getEndDate.index === index && getEndDate.day === day.number) {
-                    //     return (
-                    //         <CalendarDate key={index} index={index} day={day} color={getCurrentPlayer.color} />
-                    //     )
-                    // }
-
-                    // if (index >= getStartDate.index && index <= getEndDate.index) {
-                    //     return (
-                    //         <CalendarDate key={index} index={index} day={day} color={getCurrentPlayer.color} />
-                    //     )
-                    // }
-
-
                     return (
                         <CalendarDate key={index} index={index} day={day} color={day.currentMonth ? "white" : "lightgrey"} />
                     )

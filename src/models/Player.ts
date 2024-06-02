@@ -4,6 +4,5 @@ export interface Player {
     name: string;
     color: string;
     freeTime: FreeTime;
-    //Maybe add isAdmin
 }
 

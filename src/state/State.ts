@@ -5,7 +5,6 @@ import { Player } from "../models/Player";
 import IRetriever from "../retriever/Retriever";
 import { Day } from "../models/Day";
 import { FreeTime } from "../models/FreeTime";
-import { runMain } from "module";
 
 export class State {
     @observable private players: Player[];
@@ -50,27 +49,20 @@ export class State {
     get getEndDate(): Day {
         return this.endDate;
     }
-    // @computed
-    // get getStartDate(): IndexedDay {
-    //     return this.startDate;
-    // }
-
-    // @computed
-    // get getEndDate(): IndexedDay {
-    //     return this.endDate;
-    // }
 
     //set
-    @action public setIsStartDateSelected = (value: boolean) => {
+    @action private setIsStartDateSelected = (value: boolean) => {
         this.isStartDateSelected = value;
     }
 
     @action public setStartDate = (date: Day) => {
         this.startDate = date;
+        this.setIsStartDateSelected(true);
     }
 
     @action public setEndDate = (date: Day) => {
         this.endDate = date;
+        this.setIsStartDateSelected(false);
     }
 
     public updateCurrentPlayerFreeTime = async () => {
