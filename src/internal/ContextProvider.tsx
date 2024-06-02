@@ -3,13 +3,12 @@ import * as React from "react";
 
 interface Props {
     children: JSX.Element;
-    state: State;
+    state: State; 
 }
 
-const StateContext = React.createContext<State>({} as State);
+const StateContext = React.createContext<State>(null as unknown as State);
 
-export const StateProvider: React.FC<Props> = (props: Props) =>
-(
+export const StateProvider: React.FC<Props> = (props: Props) => (
     <StateContext.Provider value={props.state}>
         {props.children}
     </StateContext.Provider>

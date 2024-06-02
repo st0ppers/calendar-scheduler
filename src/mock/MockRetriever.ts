@@ -4,7 +4,7 @@ import IRetriever from "../retriever/Retriever";
 export class MockRetriever implements IRetriever {
     getCurrentPlayer(): Promise<Player> {
         return new Promise<Player>((resolve, reject) => {
-            resolve({ color: "Pink", name: "Jessie" } as Player);
+            resolve({ color: "Red", name: "Jessie" } as Player);
         });
     }
 
