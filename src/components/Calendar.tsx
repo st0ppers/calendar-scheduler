@@ -5,7 +5,7 @@ import CalendarBox from "./CalendarBox";
 const Calendar = () => {
     const weekdays: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-    const { updateCurrentPlayerFreeTime } = useState();
+    const { updateCurrentPlayerFreeTime, getIsStartDateSelected } = useState();
     return (
         <>
             <div style={{ width: "100%", flexGrow: "1", display: "flex", flexDirection: "column" }}>
@@ -25,7 +25,7 @@ const Calendar = () => {
                 <CalendarBox />
             </div>
 
-            <button onClick={updateCurrentPlayerFreeTime}
+            <button disabled={getIsStartDateSelected} onClick={updateCurrentPlayerFreeTime}
             >Submit</button>
         </>
     )

@@ -5,6 +5,7 @@ export const DefaultIndexedDay: IndexedDay = {
     index: -1,
     day: -1
 }
+
 export const DefaultDay: Day = {
     currentMonth: false,
     date: null,
