@@ -9,6 +9,8 @@ const SelectionLine = (props: Props) => {
         <div style={{
             width: '100%',
             height: '3px',
+            margin: '0px',
+            padding: '0px',
             backgroundColor: props.color
         }} />
     )

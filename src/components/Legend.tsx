@@ -5,12 +5,21 @@ const Legend = () => {
     const { getPlayers } = useState();
 
     return (
-        <div style={{ borderStyle: "solid", borderColor: "black", width: "200px", height: "fit-content", padding: "15px" }}>
+        <div style={{
+            borderStyle: "solid",
+            borderColor: "black",
+            width: "200px",
+            height: "fit-content",
+            padding: "15px",
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column" }}>
             {
                 getPlayers.map((player, index) => {
                     return (
-                        <div key={index} style={{ display: "flex", justifyContent: "space-between" }}>
-                            <p>{player.name} - {player.color}</p>
+                        <div key={index} style={{ margin: "0 20%", display: "flex" }} >
+                            <p>{player.name} -{'\u00A0'}</p>
+                            <p style={{ color: player.color }}>{player.color}</p>
                         </div>
                     )
                 })

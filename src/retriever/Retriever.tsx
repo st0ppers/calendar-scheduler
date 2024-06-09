@@ -6,4 +6,5 @@ export default interface IRetriever {
     getPlayers(): Promise<Player[]>;
 
     setFreeTimeForPlayer(freeTime: FreeTime, player: Player): Promise<void>;
+    isPlayerRegistered(username: string, password: string): Promise<boolean>;
 }

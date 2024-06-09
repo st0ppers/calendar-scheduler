@@ -8,7 +8,12 @@ const Calendar = () => {
     const { updateCurrentPlayerFreeTime, getIsStartDateSelected } = useState();
     return (
         <>
-            <div style={{ width: "100%", flexGrow: "1", display: "flex", flexDirection: "column" }}>
+            <div style={{
+                width: "100%",
+                flexGrow: "1",
+                display: "flex",
+                flexDirection: "column"
+            }}>
                 <div style={{
                     height: " 100px",
                     width: "100%",
@@ -25,8 +30,9 @@ const Calendar = () => {
                 <CalendarBox />
             </div>
 
-            <button disabled={getIsStartDateSelected} onClick={updateCurrentPlayerFreeTime}
-            >Submit</button>
+            <button disabled={getIsStartDateSelected} onClick={updateCurrentPlayerFreeTime}>
+                Submit
+            </button>
         </>
     )
 }

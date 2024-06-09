@@ -12,6 +12,11 @@ export class State {
     @observable private isStartDateSelected: boolean;
     @observable private startDate: Day;
     @observable private endDate: Day;
+
+    @observable private isLogged: boolean;
+    @observable private username: string;
+    @observable private password: string;
+
     private readonly retriever: IRetriever;
 
     public constructor(retriever: IRetriever) {
@@ -22,6 +27,10 @@ export class State {
         this.players = [];
         this.curentPlayer = DefaultPlayer;
         this.retriever = retriever;
+
+        this.isLogged = false;
+        this.username = "";
+        this.password = "";
     }
 
     //get
@@ -50,6 +59,11 @@ export class State {
         return this.endDate;
     }
 
+    @computed
+    get getIsLoggedIn(): boolean {
+        return this.isLogged;
+    }
+
     //set
     @action private setIsStartDateSelected = (value: boolean) => {
         this.isStartDateSelected = value;
@@ -60,9 +74,21 @@ export class State {
         this.setIsStartDateSelected(true);
     }
 
+    @action public setUsername = (value: string) => {
+        this.username = value;
+    }
+
+    @action public setPassword = (value: string) => {
+        this.password = value;
+    }
+
     @action public setEndDate = (date: Day) => {
         this.endDate = date;
         this.setIsStartDateSelected(false);
+    }
+
+    @action public logOut = () => {
+        this.isLogged = false;
     }
 
     public updateCurrentPlayerFreeTime = async () => {
@@ -73,6 +99,13 @@ export class State {
 
         runInAction(() => {
             this.players = newPlayers;
+        });
+    }
+
+    public isPlayerRegistered = async () => {
+        const isReggistered = await this.retriever.isPlayerRegistered(this.username, this.password);
+        runInAction(() => {
+            this.isLogged = isReggistered;
         });
     }
 

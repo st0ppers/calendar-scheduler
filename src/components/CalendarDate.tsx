@@ -44,19 +44,29 @@ const CalendarDate = (props: Props) => {
         <div key={props.index}
             onClick={(event) => handleClick(event, props.index)}
             style={{
-                width: "14.28%",
-                height: "14.28%",
+                width: "14%",
+                height: "18%",
                 border: "1px solid black",
                 backgroundColor: props.day.currentMonth ? "white" : "lightgrey"
             }}>
-            <p style={{ textAlign: "center", padding: "0px", margin: "0px" }}>
+            <p style={{
+                textAlign: "center",
+                padding: "0px",
+                margin: "0px"
+            }}>
                 {props.day.number}
             </p>
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100px', flexWrap: "wrap" }}>
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '100px',
+                flexWrap: "wrap"
+            }}>
                 {getPlayers.map((player, index) => {
 
-                    if(props.day.date === null) {
+                    if (props.day.date === null) {
                         return null;
                     }
 

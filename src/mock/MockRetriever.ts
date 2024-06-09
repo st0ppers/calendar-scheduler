@@ -27,6 +27,17 @@ export class MockRetriever implements IRetriever {
         ];
     }
 
+    isPlayerRegistered(username: string, password: string): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            if (username === "a" && password === "a") {
+                resolve(true);
+            }
+            else {
+                resolve(false);
+            }
+        })
+    }
+
     setFreeTimeForPlayer(freeTime: FreeTime, p: Player): Promise<void> {
         this.players.forEach(player => {
             if (player.name === p.name) {
@@ -38,7 +49,6 @@ export class MockRetriever implements IRetriever {
             resolve(
             );
         });
-
     }
 
     getCurrentPlayer(): Promise<Player> {
