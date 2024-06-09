@@ -1,22 +1,34 @@
 import { observer } from "mobx-react";
-import { useState } from "../internal/ContextProvider";
+import { useStateContext } from "../internal/StateContext";
 
 const Legend = () => {
-    const { getPlayers } = useState();
+  const state = useStateContext();
 
-    return (
-        <div style={{ borderStyle: "solid", borderColor: "black", width: "200px", height: "fit-content", padding: "15px" }}>
-            {
-                getPlayers.map((player, index) => {
-                    return (
-                        <div key={index} style={{ display: "flex", justifyContent: "space-between" }}>
-                            <p>{player.name} - {player.color}</p>
-                        </div>
-                    )
-                })
-            }
-        </div>
-    )
-}
+  return (
+    <div
+      style={{
+        borderStyle: "solid",
+        borderColor: "black",
+        width: "200px",
+        height: "fit-content",
+        padding: "15px",
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+      }}
+    >
+      {state.getPlayers.map((player, index) => {
+        return (
+          <div key={index} style={{ margin: "0 20%", display: "flex" }}>
+            <p>
+              {player.name} -{"\u00A0"}
+            </p>
+            <p style={{ color: player.color }}>{player.color}</p>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 export default observer(Legend);

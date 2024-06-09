@@ -1,88 +1,131 @@
-import { computed, action, observable, makeObservable, runInAction } from "mobx";
+import {
+  computed,
+  action,
+  observable,
+  makeObservable,
+  runInAction,
+} from "mobx";
 import { DefaultDay } from "../models/defaultValues/DefaultIndexedDay";
 import { DefaultPlayer } from "../models/defaultValues/DefaultPlayer";
 import { Player } from "../models/Player";
-import IRetriever from "../retriever/Retriever";
+import IRetriever from "../retriever/IRetriever";
 import { Day } from "../models/Day";
 import { FreeTime } from "../models/FreeTime";
 
 export class State {
-    @observable private players: Player[];
-    @observable private curentPlayer: Player;
-    @observable private isStartDateSelected: boolean;
-    @observable private startDate: Day;
-    @observable private endDate: Day;
-    private readonly retriever: IRetriever;
+  @observable private players: Player[];
+  @observable private curentPlayer: Player;
+  @observable private isStartDateSelected: boolean;
+  @observable private startDate: Day;
+  @observable private endDate: Day;
 
-    public constructor(retriever: IRetriever) {
-        makeObservable(this);
-        this.startDate = DefaultDay;
-        this.endDate = DefaultDay;
-        this.isStartDateSelected = false;
-        this.players = [];
-        this.curentPlayer = DefaultPlayer;
-        this.retriever = retriever;
-    }
+  @observable private isLoggedIn: boolean;
+  @observable private username: string;
+  @observable private password: string;
 
-    //get
-    @computed
-    get getPlayers(): Player[] {
-        return this.players;
-    }
+  private readonly retriever: IRetriever;
 
-    @computed
-    get getCurrentPlayer(): Player {
-        return this.curentPlayer;
-    }
+  public constructor(retriever: IRetriever) {
+    makeObservable(this);
+    this.startDate = DefaultDay;
+    this.endDate = DefaultDay;
+    this.isStartDateSelected = false;
+    this.players = [];
+    this.curentPlayer = DefaultPlayer;
+    this.retriever = retriever;
 
-    @computed
-    get getIsStartDateSelected(): boolean {
-        return this.isStartDateSelected;
-    }
+    this.isLoggedIn = false;
+    this.username = "";
+    this.password = "";
+  }
 
-    @computed
-    get getStartDate(): Day {
-        return this.startDate;
-    }
+  //get
+  @computed
+  get getPlayers(): Player[] {
+    return this.players;
+  }
 
-    @computed
-    get getEndDate(): Day {
-        return this.endDate;
-    }
+  @computed
+  get getCurrentPlayer(): Player {
+    return this.curentPlayer;
+  }
 
-    //set
-    @action private setIsStartDateSelected = (value: boolean) => {
-        this.isStartDateSelected = value;
-    }
+  @computed
+  get getIsStartDateSelected(): boolean {
+    return this.isStartDateSelected;
+  }
 
-    @action public setStartDate = (date: Day) => {
-        this.startDate = date;
-        this.setIsStartDateSelected(true);
-    }
+  @computed
+  get getStartDate(): Day {
+    return this.startDate;
+  }
 
-    @action public setEndDate = (date: Day) => {
-        this.endDate = date;
-        this.setIsStartDateSelected(false);
-    }
+  @computed
+  get getEndDate(): Day {
+    return this.endDate;
+  }
 
-    public updateCurrentPlayerFreeTime = async () => {
-        const freeTime = { from: this.startDate.date, to: this.endDate.date } as FreeTime;
-        const player = this.curentPlayer;
-        await this.retriever.setFreeTimeForPlayer(freeTime, player);
-        const newPlayers = await this.retriever.getPlayers();
+  @computed
+  get getIsLoggedIn(): boolean {
+    return this.isLoggedIn;
+  }
 
-        runInAction(() => {
-            this.players = newPlayers;
-        });
-    }
+  //set
+  @action private setIsStartDateSelected = (value: boolean) => {
+    this.isStartDateSelected = value;
+  };
 
-    public init = async () => {
-        const players = await this.retriever.getPlayers();
-        const currentPlayer = await this.retriever.getCurrentPlayer();
+  @action public setStartDate = (date: Day) => {
+    this.startDate = date;
+    this.setIsStartDateSelected(true);
+  };
 
-        runInAction(() => {
-            this.players = players
-            this.curentPlayer = currentPlayer
-        });
-    }
+  @action public setUsername = (value: string) => {
+    this.username = value;
+  };
+
+  @action public setPassword = (value: string) => {
+    this.password = value;
+  };
+
+  @action public setEndDate = (date: Day) => {
+    this.endDate = date;
+    this.setIsStartDateSelected(false);
+  };
+
+  @action public logOut = () => {
+    this.isLoggedIn = false;
+  };
+
+  public updateCurrentPlayerFreeTime = async () => {
+    const freeTime = {
+      from: this.startDate.date,
+      to: this.endDate.date,
+    } as FreeTime;
+    const player = this.curentPlayer;
+    await this.retriever.setFreeTimeForPlayer(freeTime, player);
+    const newPlayers = await this.retriever.getPlayers();
+
+    runInAction(() => {
+      this.players = newPlayers;
+    });
+  };
+
+  public loginPlayer = async () => {
+    const isLoggedIn = await this.retriever.login(this.username, this.password);
+
+    runInAction(() => {
+      this.isLoggedIn = isLoggedIn;
+    });
+  };
+
+  public init = async () => {
+    const players = await this.retriever.getPlayers();
+    const currentPlayer = await this.retriever.getCurrentPlayer(1); //TODO: get current player id
+
+    runInAction(() => {
+      this.players = players;
+      this.curentPlayer = currentPlayer;
+    });
+  };
 }

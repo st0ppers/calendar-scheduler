@@ -31,7 +31,14 @@ const CalendarBox = () => {
     }
 
     return (
-        <div style={{ width: "100%", flexGrow: "1", display: "flex", flexWrap: "wrap", justifyContent: "center", boxSizing: "border-box" }}>
+        <div style={{
+            width: "100%",
+            flexGrow: "1",
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            boxSizing: "border-box"
+        }}>
             {
                 currentDays.map((day, index) => {
                     return (

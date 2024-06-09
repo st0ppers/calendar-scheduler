@@ -1,10 +1,11 @@
 import { Player } from "../Player";
 
 export const DefaultPlayer: Player = {
-    name: "",
-    color: "",
-    freeTime: {
-        from: new Date(),
-        to: new Date()
-    }
-}
+  id: 0,
+  name: "",
+  color: "",
+  freeTime: {
+    from: new Date(),
+    to: new Date(),
+  },
+};
