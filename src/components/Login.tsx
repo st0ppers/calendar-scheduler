@@ -11,9 +11,9 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
-    await state.loginPlayer();
+    await state.loginState.loginPlayer();
 
-    if (!state.getIsLoggedIn) {
+    if (!state.loginState.getIsLoggedIn) {
       //add warning message that the login failed
     } else {
       navigate("/calendar");
@@ -45,7 +45,7 @@ const Login: React.FC = () => {
           placeholder="Username"
           style={margin}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            state.setUsername(e.target.value)
+            state.loginState.setUsername(e.target.value)
           }
         />
         <input
@@ -55,7 +55,7 @@ const Login: React.FC = () => {
           autoComplete="on"
           style={margin}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            state.setPassword(e.target.value)
+            state.loginState.setPassword(e.target.value)
           }
         />
         <input style={margin} type="submit" value="Login" />

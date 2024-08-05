@@ -17,7 +17,7 @@ const Legend = () => {
         flexDirection: "column",
       }}
     >
-      {state.getPlayers.map((player, index) => {
+      {state.playerState.getPlayers.map((player, index) => {
         return (
           <div key={index} style={{ margin: "0 20%", display: "flex" }}>
             <p>

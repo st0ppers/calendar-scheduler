@@ -11,16 +11,16 @@ const TopBar = () => {
     <div style={{ display: "flex", justifyContent: "space-between" }}>
       <div style={{ display: "flex" }}>
         <p>
-          {state.getCurrentPlayer.name} -{"\u00A0"}
+          {state.playerState.getCurrentPlayer.name} -{"\u00A0"}
         </p>
-        <p style={{ color: state.getCurrentPlayer.color }}>
-          {state.getCurrentPlayer.color}
+        <p style={{ color: state.playerState.getCurrentPlayer.color }}>
+          {state.playerState.getCurrentPlayer.color}
         </p>
       </div>
       <p style={{ fontSize: "32px" }}>{month}</p>
       <button
         onClick={() => {
-          state.logOut();
+          state.loginState.logOut();
           navigate("/login");
         }}
       >

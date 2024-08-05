@@ -20,8 +20,8 @@ const CalendarDate = (props: Props) => {
     const target = event.target as HTMLParagraphElement;
     const textContent = Number(target.textContent);
 
-    if (!state.getIsStartDateSelected) {
-      state.setStartDate({
+    if (!state.playerState.getIsStartDateSelected) {
+      state.playerState.setStartDate({
         currentMonth: props.day.currentMonth,
         date: props.day.date,
         month: props.day.month,
@@ -31,7 +31,7 @@ const CalendarDate = (props: Props) => {
         index: index,
       });
     } else {
-      state.setEndDate({
+      state.playerState.setEndDate({
         currentMonth: props.day.currentMonth,
         date: props.day.date,
         month: props.day.month,
@@ -73,7 +73,7 @@ const CalendarDate = (props: Props) => {
           flexWrap: "wrap",
         }}
       >
-        {state.getPlayers.map((player: Player, index: number) => {
+        {state.playerState.getPlayers.map((player: Player, index: number) => {
           if (props.day.date === null) {
             return null;
           }

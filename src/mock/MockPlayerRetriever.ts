@@ -1,8 +1,8 @@
 import { FreeTime } from "../models/FreeTime";
 import { Player } from "../models/Player";
-import IRetriever from "../retriever/IRetriever";
+import IPlayerRetriever from "../retriever/IPlayerRetriever";
 
-export class MockRetriever implements IRetriever {
+export class MockPlayerRetriever implements IPlayerRetriever {
   private updateDates = (
     yesterday: Date,
     tomorrow: Date,
@@ -61,16 +61,6 @@ export class MockRetriever implements IRetriever {
     ];
   }
 
-  login(username: string, password: string): Promise<boolean> {
-    return new Promise<boolean>((resolve, reject) => {
-      if (username === "a" && password === "a") {
-        resolve(true);
-      } else {
-        resolve(false);
-      }
-    });
-  }
-
   setFreeTimeForPlayer(freeTime: FreeTime, p: Player): Promise<void> {
     this.players.forEach((player) => {
       if (player.name === p.name) {
@@ -78,18 +68,18 @@ export class MockRetriever implements IRetriever {
       }
     });
 
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<void>((resolve) => {
       resolve();
     });
   }
 
-  getCurrentPlayer(): Promise<Player> {
+  getCurrentPlayer(id: number, token: string): Promise<Player> {
     return new Promise<Player>((resolve, reject) => {
       resolve({ color: "Purple", name: "Petur" } as Player);
     });
   }
 
-  getPlayers(): Promise<Player[]> {
+  getPlayers(token: string): Promise<Player[]> {
     return new Promise<Player[]>((resolve, reject) => {
       resolve(this.players);
     });

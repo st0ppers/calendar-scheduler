@@ -37,8 +37,8 @@ const Calendar = () => {
       </div>
 
       <button
-        disabled={state.getIsStartDateSelected}
-        onClick={state.updateCurrentPlayerFreeTime}
+        disabled={state.playerState.getIsStartDateSelected}
+        onClick={state.playerState.updateCurrentPlayerFreeTime}
       >
         Submit
       </button>
