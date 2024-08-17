@@ -1,33 +1,16 @@
-import { observer } from "mobx-react";
-import { useNavigate } from "react-router-dom";
-import { useStateContext } from "../internal/StateContext";
+import {observer} from "mobx-react";
+import React from "react";
+import {LogoutButton} from "./header/LogoutButton";
+import {PlayerInfo} from "./header/PlayerInfo";
 
-const TopBar = () => {
-  const month = new Date().toLocaleString("default", { month: "long" });
-  const state = useStateContext();
-  const navigate = useNavigate();
-
-  return (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <div style={{ display: "flex" }}>
-        <p>
-          {state.playerState.getCurrentPlayer.name} -{"\u00A0"}
-        </p>
-        <p style={{ color: state.playerState.getCurrentPlayer.color }}>
-          {state.playerState.getCurrentPlayer.color}
-        </p>
-      </div>
-      <p style={{ fontSize: "32px" }}>{month}</p>
-      <button
-        onClick={() => {
-          state.loginState.logOut();
-          navigate("/login");
-        }}
-      >
-        Logout
-      </button>
-    </div>
-  );
-};
-
-export default observer(TopBar);
+export const TopBar = observer((): React.ReactElement => {
+    const month = new Date().toLocaleString("default", {month: "long"});
+    
+    return (
+        <div style={{display: "flex", justifyContent: "space-between"}}>
+            <PlayerInfo/>
+            <p style={{fontSize: "32px"}}>{month}</p>
+            <LogoutButton/>
+        </div>
+    );
+});
