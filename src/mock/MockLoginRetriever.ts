@@ -1,14 +1,19 @@
 import ILoginRetriever from "../retriever/ILoginRetriever";
-import {Login} from "../models/Login";
+import {LoginRequest} from "../models/requests/LoginRequest";
+import {Login} from "../models/internal/Login";
 
 export class MockLoginRetriever implements ILoginRetriever {
-    login(username: string, password: string): Promise<Login> {
+    login(request: LoginRequest): Promise<Login> {
         return new Promise<Login>((resolve, _) => {
-            if (username === "a" && password === "a") {
-                resolve({} as Login);
-            } else {
-                resolve({} as Login);
-            }
+            resolve({
+                player: {
+                    color: "red",
+                    freeTime: {from: new Date("2024-08-15"), to: new Date("2024-08-20")},
+                    name: "Petur"
+                },
+                expiration: 1,
+                token: "token"
+            } as Login);
         });
     }
 }

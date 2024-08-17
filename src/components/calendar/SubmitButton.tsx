@@ -4,12 +4,11 @@ import React from "react";
 
 export const SubmitButton = observer((): React.ReactElement => {
     const {playerState} = useStateContext();
-    const {getIsStartDateSelected, updateCurrentPlayerFreeTime} = playerState;
+    const {getIsFromSelected, updateCurrentPlayerFreeTime} = playerState;
     return (
         <button
-            disabled={getIsStartDateSelected}
-            onClick={updateCurrentPlayerFreeTime}
-        >
+            disabled={getIsFromSelected}
+            onClick={updateCurrentPlayerFreeTime}>
             Submit
         </button>
     );

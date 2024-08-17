@@ -1,36 +1,26 @@
 import {handler} from "../internal/utils/ResponseHandler";
-import {FreeTime} from "../models/FreeTime";
-import {Player} from "../models/Player";
 import IPlayerRetriever from "./IPlayerRetriever";
-import {PlayerResponse} from "../models/PlayerResponse";
+import {UpdateFreeTimeRequest} from "../models/requests/UpdateFreeTimeRequest";
+import {Player} from "../models/internal/Player";
+import {PlayerResponse} from "../models/responses/PlayerResponse";
 
 export class PlayerRetriever implements IPlayerRetriever {
     constructor(private readonly url: string) {}
     
-    setFreeTimeForPlayer(freeTime: FreeTime, player: Player): Promise<void> {
-        //TODO:
-        return new Promise<void>((resolve, _) => {
-            resolve();
+    async setFreeTimeForPlayer(request: UpdateFreeTimeRequest, token: string): Promise<void> {
+        console.log(JSON.stringify(request));
+        await fetch(`${this.url}/api/Player/update-free-time`, {
+            method: "POST",
+            body: JSON.stringify(request),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
         });
     }
     
-    // async getCurrentPlayer(id: number, token: string): Promise<Player> {
-    //     return await fetch(`${this.url}/api/Player/${id}`, {
-    //         method: "GET",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             Authorization: `Bearer ${token}`
-    //         }
-    //     })
-    //         .then(handler)
-    //         .catch((error) => {
-    //             console.error(error);
-    //             return {} as Player;
-    //         });
-    // }
-    //
     async getPlayers(token: string): Promise<Player[]> {
-        return await fetch(`${this.url}/api/Player/1`, {
+        return await fetch(`${this.url}/api/Player?GroupId=1`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -47,6 +37,7 @@ export class PlayerRetriever implements IPlayerRetriever {
     
     private responseToInternal = (players: PlayerResponse[]): Player[] => {
         return players.map((p: PlayerResponse) => ({
+            id: p.id,
             name: p.username,
             color: p.color,
             freeTime: p.freeTime

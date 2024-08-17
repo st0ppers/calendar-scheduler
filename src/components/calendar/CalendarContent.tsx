@@ -1,10 +1,10 @@
-import {Day} from "../../models/Day";
 import {observer} from "mobx-react";
-import {Player} from "../../models/Player";
 import {useStateContext} from "../../internal/StateContext";
 import React from "react";
 import {SelectionLine} from "./SelectionLine";
 import {DayNumber} from "./DayNumber";
+import {Day} from "../../models/internal/Day";
+import {Player} from "../../models/internal/Player";
 
 interface Props {
     index: number;
@@ -12,39 +12,21 @@ interface Props {
 }
 
 export const CalendarContent = observer(({index, day}: Props): React.ReactElement => {
-    const state = useStateContext();
+    const {playerState} = useStateContext();
+    const {getIsFromSelected, getPlayers, setFromDate, setToDate} = playerState;
     
-    const handleClick = (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>, i: number) => {
-        const target = event.target as HTMLParagraphElement;
-        const textContent = Number(target.textContent);
-        
-        if (!state.playerState.getIsStartDateSelected) {
-            state.playerState.setStartDate({
-                currentMonth: day.currentMonth,
-                date: day.date,
-                month: day.month,
-                number: textContent,
-                selected: day.selected,
-                year: day.year,
-                index: i
-            });
-        } else {
-            state.playerState.setEndDate({
-                currentMonth: day.currentMonth,
-                date: day.date,
-                month: day.month,
-                number: textContent,
-                selected: day.selected,
-                year: day.year,
-                index: i
-            });
+    const handleClick = () => {
+        if (!getIsFromSelected) {
+            setFromDate(day.date);
+            return;
         }
+        setToDate(day.date);
     };
     
     return (
         <div
             key={index}
-            onClick={(event) => handleClick(event, index)}
+            onClick={handleClick}
             style={{
                 width: "14%",
                 height: "18%",
@@ -52,7 +34,7 @@ export const CalendarContent = observer(({index, day}: Props): React.ReactElemen
                 backgroundColor: day.currentMonth ? "white" : "lightgrey"
             }}
         >
-            <DayNumber date={day.number}/>
+            <DayNumber date={day.date?.getDate() ?? 0}/>
             <div
                 style={{
                     display: "flex",
@@ -62,16 +44,8 @@ export const CalendarContent = observer(({index, day}: Props): React.ReactElemen
                     flexWrap: "wrap"
                 }}
             >
-                {state.playerState.getPlayers.map((player: Player, index: number) => {
-                    if (day.date === null) {
-                        return null;
-                    }
-                    
-                    if (day.date >= new Date(player.freeTime.from) && day.date <= new Date(player.freeTime.to)) {
-                        return <SelectionLine key={index} color={player.color}/>;
-                    }
-                    
-                    return <SelectionLine key={index} color={day.currentMonth ? "white" : "lightgrey"}/>;
+                {getPlayers.map((player: Player, index: number) => {
+                    return <SelectionLine key={index} player={player} day={day}/>;
                 })}
             </div>
         </div>

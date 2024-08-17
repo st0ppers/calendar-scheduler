@@ -2,7 +2,7 @@ import {observer} from "mobx-react";
 import React from "react";
 
 export const CalendarHeading = observer((): React.ReactElement => {
-    const weekdays: string[] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const weekdays: string[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     
     return (
         <div

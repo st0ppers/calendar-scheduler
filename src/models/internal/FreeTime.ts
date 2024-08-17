@@ -1,4 +1,4 @@
 export interface FreeTime {
-  from: Date;
-  to: Date;
+    from: Date;
+    to: Date;
 }

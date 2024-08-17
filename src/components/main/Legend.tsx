@@ -1,7 +1,7 @@
 import {observer} from "mobx-react";
-import {useStateContext} from "../internal/StateContext";
 import React from "react";
-import {Player} from "../models/Player";
+import {useStateContext} from "../../internal/StateContext";
+import {Player} from "../../models/internal/Player";
 
 export const Legend = observer((): React.ReactElement => {
     const {playerState} = useStateContext();

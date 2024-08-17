@@ -1,7 +1,7 @@
 import {observer} from "mobx-react";
 import React from "react";
-import {LogoutButton} from "./header/LogoutButton";
-import {PlayerInfo} from "./header/PlayerInfo";
+import {PlayerInfo} from "../header/PlayerInfo";
+import {LogoutButton} from "../header/LogoutButton";
 
 export const TopBar = observer((): React.ReactElement => {
     const month = new Date().toLocaleString("default", {month: "long"});

@@ -7,7 +7,7 @@ import {MockLoginRetriever} from "./mock/MockLoginRetriever";
 import {PlayerRetriever} from "./retriever/PlayerRetriever";
 import {LoginRetriever} from "./retriever/LoginRetriever";
 import {Login} from "./components/login/Login";
-import {Main} from "./components/Main";
+import {Main} from "./components/main/Main";
 
 export const App = observer(() => {
     const playerRetriever =
@@ -21,7 +21,6 @@ export const App = observer(() => {
         : new MockLoginRetriever();
     
     const state = new State(loginRetriever, playerRetriever);
-    state.init();
     
     return (
         <StateProvider state={state}>

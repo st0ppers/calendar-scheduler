@@ -5,34 +5,21 @@ import {
     observable,
     runInAction
 } from "mobx";
-import {DefaultDay} from "../models/defaultValues/DefaultIndexedDay";
 import {DefaultPlayer} from "../models/defaultValues/DefaultPlayer";
-import {Player} from "../models/Player";
 import IPlayerRetriever from "../retriever/IPlayerRetriever";
-import {Day} from "../models/Day";
-import {FreeTime} from "../models/FreeTime";
 import {State} from "./State";
+import {Player} from "../models/internal/Player";
+import {UpdateFreeTimeRequest} from "../models/requests/UpdateFreeTimeRequest";
 
 export class PlayerState {
-    @observable private players: Player[];
-    @observable private currentPlayer: Player;
-    @observable private isStartDateSelected: boolean;
-    @observable private startDate: Day;
-    @observable private endDate: Day;
+    @observable private players: Player[] = [];
+    @observable private currentPlayer: Player = DefaultPlayer;
+    @observable private isFromSelected: boolean = false;
     
-    public constructor(
-        private readonly retriever: IPlayerRetriever,
-        private readonly state: State
-    ) {
+    public constructor(private readonly retriever: IPlayerRetriever, private readonly state: State) {
         makeObservable(this);
-        this.startDate = DefaultDay;
-        this.endDate = DefaultDay;
-        this.isStartDateSelected = false;
-        this.players = [];
-        this.currentPlayer = DefaultPlayer;
     }
     
-    //get
     @computed
     get getPlayers(): Player[] {
         return this.players;
@@ -44,63 +31,48 @@ export class PlayerState {
     }
     
     @computed
-    get getIsStartDateSelected(): boolean {
-        return this.isStartDateSelected;
+    get getIsFromSelected(): boolean {
+        return this.isFromSelected;
     }
-    
-    @computed
-    get getStartDate(): Day {
-        return this.startDate;
-    }
-    
-    @computed
-    get getEndDate(): Day {
-        return this.endDate;
-    }
-    
-    //set
-    @action private setIsStartDateSelected = (value: boolean) => {
-        this.isStartDateSelected = value;
-    };
     
     @action public setCurrentPlayer = (player: Player) => {
         this.currentPlayer = player;
     };
     
-    @action public setStartDate = (date: Day) => {
-        this.startDate = date;
-        this.setIsStartDateSelected(true);
+    @action public setFromDate = (date: Date) => {
+        this.currentPlayer.freeTime.from = date;
+        this.players = this.players.map(p => p.id === this.currentPlayer.id ? this.currentPlayer : p);
+        this.isFromSelected = !this.isFromSelected;
     };
     
-    @action public setEndDate = (date: Day) => {
-        this.endDate = date;
-        this.setIsStartDateSelected(false);
+    @action public setToDate = (date: Date) => {
+        this.currentPlayer.freeTime.to = date;
+        this.players = this.players.map(p => p.id === this.currentPlayer.id ? this.currentPlayer : p);
+        this.isFromSelected = !this.isFromSelected;
     };
     
     public updateCurrentPlayerFreeTime = async () => {
-        const freeTime = {
-            from: this.startDate.date,
-            to: this.endDate.date
-        } as FreeTime;
-        const player = this.currentPlayer;
-        await this.retriever.setFreeTimeForPlayer(freeTime, player);
-        const newPlayers = await this.retriever.getPlayers(
-            this.state.loginState.getAccessToken
-        );
+        const request: UpdateFreeTimeRequest = {
+            playerId: this.currentPlayer.id,
+            from: this.currentPlayer.freeTime.from,
+            to: this.currentPlayer.freeTime.to
+        };
+        
+        await this.retriever.setFreeTimeForPlayer(request, this.state.loginState.getAccessToken);
+        const newPlayers = await this.retriever.getPlayers(this.state.loginState.getAccessToken);
         
         runInAction(() => {
             this.players = newPlayers;
         });
     };
     
-    public init = async () => {
+    public init = async (player: Player) => {
         const token = this.state.loginState.getAccessToken;
         const players = await this.retriever.getPlayers(token);
-        // const currentPlayer = await this.retriever.getCurrentPlayer(1, token); //TODO: get current player id
         
         runInAction(() => {
             this.players = players;
-            // this.currentPlayer = currentPlayer;
+            this.currentPlayer = player;
         });
     };
 }

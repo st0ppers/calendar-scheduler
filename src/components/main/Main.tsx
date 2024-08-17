@@ -1,8 +1,8 @@
 import {observer} from "mobx-react";
 import {TopBar} from "./TopBar";
 import {Legend} from "./Legend";
-import {Calendar} from "./calendar/Calendar";
 import React from "react";
+import {Calendar} from "../calendar/Calendar";
 
 export const Main = observer((): React.ReactElement  => {
     return (

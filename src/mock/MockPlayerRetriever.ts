@@ -1,81 +1,62 @@
-import {FreeTime} from "../models/FreeTime";
-import {Player} from "../models/Player";
 import IPlayerRetriever from "../retriever/IPlayerRetriever";
+import {Player} from "../models/internal/Player";
+import {UpdateFreeTimeRequest} from "../models/requests/UpdateFreeTimeRequest";
 
 export class MockPlayerRetriever implements IPlayerRetriever {
-    private updateDates = (
-        yesterday: Date,
-        tomorrow: Date,
-        twoDaysAfterToday: Date,
-        today: Date
-    ) => {
-        yesterday.setDate(today.getDate() - 1);
-        tomorrow.setDate(today.getDate() + 1);
-        twoDaysAfterToday.setDate(today.getDate() + 2);
-    };
+    private players: Player[] = [
+        {
+            id: "1",
+            color: "Blue",
+            name: "Alex",
+            freeTime: {from: new Date("2024-08-01"), to: new Date("2024-08-03")}
+        },
+        {
+            id: "2",
+            color: "Black",
+            name: "Nasko",
+            freeTime: {from: new Date("2024-08-03"), to: new Date("2024-08-04")}
+        },
+        {
+            id: "2",
+            color: "Red",
+            name: "Petur",
+            freeTime: {from: new Date("2024-08-05"), to: new Date("2024-08-06")}
+        },
+        {
+            id: "3",
+            color: "Purple",
+            name: "Djat",
+            freeTime: {from: new Date("2024-08-07"), to: new Date("2024-08-08")}
+        },
+        {
+            id: "4",
+            color: "Pink",
+            name: "Jak",
+            freeTime: {from: new Date("2024-08-09"), to: new Date("2024-08-10")}
+        },
+        {
+            id: "5",
+            color: "Green",
+            name: "Ivo",
+            freeTime: {from: new Date("2024-08-11"), to: new Date("2024-08-12")}
+        }
+    ];
     
-    private today = new Date();
-    private yesterday = new Date();
-    private tomorrow = new Date();
-    private twoDaysAfterToday = new Date();
-    private players: Player[] = [];
-    
-    constructor() {
-        this.updateDates(
-            this.yesterday,
-            this.tomorrow,
-            this.twoDaysAfterToday,
-            this.today
-        );
-        this.players = [
-            {
-                color: "Blue",
-                name: "Alex",
-                freeTime: {from: this.yesterday, to: this.today} as FreeTime
-            } as Player,
-            {
-                color: "Black",
-                name: "Nasko",
-                freeTime: {from: this.today, to: this.tomorrow} as FreeTime
-            } as Player,
-            {
-                color: "Red",
-                name: "Petur",
-                freeTime: {from: this.today, to: this.twoDaysAfterToday} as FreeTime
-            } as Player,
-            {
-                color: "Purple",
-                name: "Djat",
-                freeTime: {from: this.today, to: this.twoDaysAfterToday} as FreeTime
-            } as Player,
-            {
-                color: "Pink",
-                name: "Jak",
-                freeTime: {from: this.today, to: this.twoDaysAfterToday} as FreeTime
-            } as Player,
-            {
-                color: "Green",
-                name: "Ivo",
-                freeTime: {from: this.today, to: this.twoDaysAfterToday} as FreeTime
-            } as Player
-        ];
+    getPlayers(token: string): Promise<Player[]> {
+        return new Promise<Player[]>((resolve, _) => {
+            resolve(this.players);
+        });
     }
     
-    setFreeTimeForPlayer(freeTime: FreeTime, p: Player): Promise<void> {
+    setFreeTimeForPlayer(request: UpdateFreeTimeRequest): Promise<void> {
         this.players.forEach((player) => {
-            if (player.name === p.name) {
-                player.freeTime = freeTime;
+            if (player.id === request.playerId) {
+                player.freeTime = {from: request.from, to: request.to};
             }
         });
         
         return new Promise<void>((resolve) => {
             resolve();
-        });
-    }
-    
-    getPlayers(token: string): Promise<Player[]> {
-        return new Promise<Player[]>((resolve, _) => {
-            resolve(this.players);
         });
     }
 }

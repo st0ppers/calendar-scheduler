@@ -1,7 +1,7 @@
-import {Day} from "../../models/Day";
 import {observer} from "mobx-react";
 import React from "react";
 import {CalendarContent} from "./CalendarContent";
+import {Day} from "../../models/internal/Day";
 
 export const CalendarBox = observer((): React.ReactElement => {
     const currentDay = new Date();
@@ -13,14 +13,14 @@ export const CalendarBox = observer((): React.ReactElement => {
         if (day === 0 && weekdayOfFirstDay === 0) {
             firstDayOfMonth.setDate(firstDayOfMonth.getDate() - 7);
         } else if (day === 0) {
-            firstDayOfMonth.setDate(firstDayOfMonth.getDate() + (day - weekdayOfFirstDay));
+            firstDayOfMonth.setDate(firstDayOfMonth.getDate() + (day - weekdayOfFirstDay + 1));
         } else {
             firstDayOfMonth.setDate(firstDayOfMonth.getDate() + 1);
         }
         
         let calendarDay = {
             currentMonth: (firstDayOfMonth.getMonth() === currentDay.getMonth()),
-            date: (new Date(firstDayOfMonth)),
+            date: new Date(firstDayOfMonth),
             month: firstDayOfMonth.getMonth(),
             number: firstDayOfMonth.getDate(),
             selected: (firstDayOfMonth.toDateString() === currentDay.toDateString()),

@@ -1,5 +1,6 @@
-import {Login} from "../models/Login";
+import {LoginRequest} from "../models/requests/LoginRequest";
+import {Login} from "../models/internal/Login";
 
 export default interface ILoginRetriever {
-  login(username: string, password: string): Promise<Login>;
+    login(request: LoginRequest): Promise<Login>;
 }

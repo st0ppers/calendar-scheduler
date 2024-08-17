@@ -1,22 +1,16 @@
-import {action, computed, observable, runInAction} from "mobx";
+import {action, computed, makeObservable, observable, runInAction} from "mobx";
 import ILoginRetriever from "../retriever/ILoginRetriever";
 import {State} from "./State";
+import {LoginRequest} from "../models/requests/LoginRequest";
 
 export class LoginState {
-    @observable private isLoggedIn: boolean;
-    @observable private username: string;
-    @observable private password: string;
-    @observable private accessToken: string;
+    @observable private isLoggedIn: boolean = false;
+    @observable private username: string = "";
+    @observable private password: string = "";
+    @observable private accessToken: string = "";
     
-    public constructor(
-        private readonly retriever: ILoginRetriever,
-        private readonly state: State
-    ) {
-        //makeObservable(this);
-        this.isLoggedIn = false;
-        this.username = "";
-        this.password = "";
-        this.accessToken = "";
+    public constructor(private readonly retriever: ILoginRetriever, private readonly state: State) {
+        makeObservable(this);
     }
     
     @computed
@@ -46,18 +40,13 @@ export class LoginState {
     };
     
     public loginPlayer = async () => {
-        const response = await this.retriever.login(this.username, this.password);
-        if (!response.token) {
-            return;
-        } else {
-            runInAction(() => {
-                this.isLoggedIn = true;
-                this.accessToken = response.token;
-            });
-            
-            this.state.playerState.setCurrentPlayer(response.player);
-            
-            await this.state.playerState.init();
-        }
+        const request: LoginRequest = {username: this.username, password: this.password};
+        const response = await this.retriever.login(request);
+        runInAction(() => {
+            this.isLoggedIn = true;
+            this.accessToken = response.token;
+        });
+        
+        await this.state.playerState.init(response.player);
     };
 }
