@@ -5,8 +5,8 @@ import React from "react";
 export const PlayerInfo = observer((): React.ReactElement => {
     const {playerState} = useStateContext();
     
-    return(
-        <div style={{display: "flex"}}>
+    return (
+        <div style={{display: "flex", alignItems: "center"}}>
             <p>
                 {playerState.getCurrentPlayer.name} -{"\u00A0"}
             </p>
@@ -14,5 +14,5 @@ export const PlayerInfo = observer((): React.ReactElement => {
                 {playerState.getCurrentPlayer.color}
             </p>
         </div>
-    )
+    );
 });

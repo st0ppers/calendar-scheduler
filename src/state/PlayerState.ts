@@ -35,27 +35,32 @@ export class PlayerState {
         return this.isFromSelected;
     }
     
-    @action public setCurrentPlayer = (player: Player) => {
-        this.currentPlayer = player;
+    @action public resetCurrentFreeTime = () => {
+        this.players = this.players.map(p => p.id === this.currentPlayer.id ? this.currentPlayer : p);
     };
     
     @action public setFromDate = (date: Date) => {
-        this.currentPlayer.freeTime.from = date;
-        this.players = this.players.map(p => p.id === this.currentPlayer.id ? this.currentPlayer : p);
+        this.players = this.players.map(
+            p => p.id === this.currentPlayer.id ? {...p, freeTime: {...p.freeTime, from: date}} : p);
         this.isFromSelected = !this.isFromSelected;
     };
     
     @action public setToDate = (date: Date) => {
-        this.currentPlayer.freeTime.to = date;
-        this.players = this.players.map(p => p.id === this.currentPlayer.id ? this.currentPlayer : p);
+        this.players = this.players.map(
+            p => p.id === this.currentPlayer.id ? {...p, freeTime: {...p.freeTime, to: date}} : p);
         this.isFromSelected = !this.isFromSelected;
     };
     
     public updateCurrentPlayerFreeTime = async () => {
+        const player = this.players.find(p => p.id === this.currentPlayer.id);
+        if (!player) {
+            return;
+        }
+        
         const request: UpdateFreeTimeRequest = {
             playerId: this.currentPlayer.id,
-            from: this.currentPlayer.freeTime.from,
-            to: this.currentPlayer.freeTime.to
+            from: player.freeTime.from,
+            to: player.freeTime.to
         };
         
         await this.retriever.setFreeTimeForPlayer(request, this.state.loginState.getAccessToken);
