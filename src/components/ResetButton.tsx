@@ -8,6 +8,5 @@ export const ResetButton = observer((): React.ReactElement => {
         <button onClick={playerState.resetCurrentFreeTime}>
             Reset
         </button>
-    
     );
 });

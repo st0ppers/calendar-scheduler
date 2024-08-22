@@ -8,6 +8,7 @@ import {PlayerRetriever} from "./retriever/PlayerRetriever";
 import {LoginRetriever} from "./retriever/LoginRetriever";
 import {Login} from "./components/login/Login";
 import {Main} from "./components/main/Main";
+import {Register} from "./components/register/Register";
 
 export const App = observer(() => {
     const playerRetriever =
@@ -28,6 +29,7 @@ export const App = observer(() => {
                 <Routes>
                     <Route path="/" element={<Login/>}/>
                     <Route path="/calendar" element={<Main/>}/>
+                    <Route path="/register" element={<Register/>}/>
                     <Route path="*" element={<Login/>}/>
                 </Routes>
             </BrowserRouter>

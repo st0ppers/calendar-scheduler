@@ -1,23 +1,10 @@
 import React from "react";
 import {observer} from "mobx-react";
-import {Form} from "./Form";
-
-const Wrapper = ({children}: React.PropsWithChildren<{}>): React.ReactElement => (
-    <div
-        style={{
-            display: "flex",
-            justifyContent: "center",
-            flexWrap: "wrap",
-            flexDirection: "column",
-            margin: "auto"
-        }}>
-        {children}
-    </div>
-);
+import {LoginForm} from "./LoginForm";
+import {FormWrapper} from "../shared/FormWrapper";
 
 export const Login = observer((): React.ReactElement => (
-    <Wrapper>
-        <p style={{textAlign: "center"}}>Welcome</p>
-        <Form/>
-    </Wrapper>
+    <FormWrapper>
+        <LoginForm/>
+    </FormWrapper>
 ));
