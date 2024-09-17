@@ -4,10 +4,7 @@ import React from "react";
 const Wrapper = ({children}: React.PropsWithChildren<{}>): React.ReactElement => (
     <div
         style={{
-            height: " 100px",
-            width: "100%",
             display: "flex",
-            alignItems: "center",
             justifyContent: "space-around"
         }}
     >

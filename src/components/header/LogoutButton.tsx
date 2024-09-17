@@ -9,6 +9,7 @@ export const LogoutButton = observer((): React.ReactElement => {
     
     return (
         <button
+            style={{height: "fit-content"}}
             onClick={() => {
                 loginState.logOut();
                 navigate("/login");
