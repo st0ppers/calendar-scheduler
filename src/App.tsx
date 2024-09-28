@@ -12,13 +12,13 @@ import { MockLoginRetriever } from "./mock/MockLoginRetriever";
 
 export const App = observer(() => {
   const playerRetriever =
-    process.env.NODE_ENV === "?"
+    process.env.NODE_ENV === "development"
       ? new MockPlayerRetriever()
-      : new PlayerRetriever("https://localhost:7265");
+      : new PlayerRetriever(process.env.REACT_APP_API_URL ?? "");
   const loginRetriever =
-    process.env.NODE_ENV === "?"
+    process.env.NODE_ENV === "development"
       ? new MockLoginRetriever()
-      : new LoginRetriever("https://localhost:7265");
+      : new LoginRetriever(process.env.REACT_APP_API_URL ?? "");
 
   const state = new State(loginRetriever, playerRetriever);
   return (
