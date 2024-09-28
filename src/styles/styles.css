@@ -1,0 +1,51 @@
+.animated-button {
+  background-color: #242526;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  transition:
+    transform 0.2s ease,
+    background-color 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.animated-button:hover {
+  background-color: #3a3b3c;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.animated-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.animated-button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(1);
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.animated-button:active::after {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.2);
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
