@@ -1,6 +1,6 @@
 .animated-button {
-  background-color: #242526;
-  color: white;
+  background-color: #93979f;
+  color: black;
   border: none;
   padding: 12px 24px;
   font-size: 16px;
@@ -16,7 +16,7 @@
 }
 
 .animated-button:hover {
-  background-color: #3a3b3c;
+  background-color: #636363;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 

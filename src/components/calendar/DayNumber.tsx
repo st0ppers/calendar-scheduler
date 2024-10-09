@@ -12,7 +12,7 @@ export const DayNumber = observer(({ date }: Props): React.ReactElement => {
         textAlign: "center",
         padding: "0px",
         margin: "0px",
-        color: "white",
+        color: "black",
       }}
     >
       {date}
