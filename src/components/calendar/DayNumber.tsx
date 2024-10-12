@@ -1,22 +1,34 @@
-import { observer } from "mobx-react";
+import {observer} from "mobx-react";
 import React from "react";
 
 interface Props {
-  date: number;
+    date: number;
+    isCurrentMonth: boolean;
 }
 
-export const DayNumber = observer(({ date }: Props): React.ReactElement => {
-  return (
+const StyledParagraph = ({children}: React.PropsWithChildren<{}>): React.ReactElement => (
     <p
-      style={{
-        textAlign: "center",
-        padding: "0px",
-        margin: "0px",
-        color: "black",
-      }}
+        style={{
+            textAlign: "center",
+            padding: "0px",
+            margin: "0px",
+            color: "black",
+        }}
     >
-      {date}
+        {children}
     </p>
-  );
+);
+
+export const DayNumber = observer(({date, isCurrentMonth}: Props): React.ReactElement => {
+    return (
+        <>
+            {isCurrentMonth ?
+                <StyledParagraph>
+                    {date}
+                </StyledParagraph>
+                : null
+            }
+        </>
+    );
 });
 

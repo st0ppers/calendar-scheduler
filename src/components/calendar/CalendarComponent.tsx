@@ -1,6 +1,6 @@
 import {observer} from "mobx-react";
 import React, {PropsWithChildren} from "react";
-import {CalendarBox} from "./CalendarBox";
+import {CalendarContent} from "./CalendarContent";
 import {CalendarHeading} from "./CalendarHeading";
 
 const Wrapper = ({children}: PropsWithChildren): React.ReactElement => (
@@ -16,11 +16,11 @@ const Wrapper = ({children}: PropsWithChildren): React.ReactElement => (
     </div>
 );
 
-export const Calendar = observer((): React.ReactElement => (
+export const CalendarComponent = observer((): React.ReactElement => (
     <>
         <Wrapper>
             <CalendarHeading/>
-            <CalendarBox/>
+            <CalendarContent/>
         </Wrapper>
     </>
 ));

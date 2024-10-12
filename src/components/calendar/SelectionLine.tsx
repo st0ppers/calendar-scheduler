@@ -1,10 +1,10 @@
 import {observer} from "mobx-react";
 import React from "react";
-import {Day} from "../../models/internal/Day";
 import {Player} from "../../models/internal/Player";
+import {isCurrentMonth} from "../../internal/utils/Date";
 
 interface Props {
-    day: Day;
+    date: Date;
     player: Player;
 }
 
@@ -23,19 +23,17 @@ const Line = ({backgroundColor}: ColorProps): React.ReactElement => (
         }}
     />
 );
-export const SelectionLine = observer(({day, player}: Props): React.ReactElement => {
-        const backgroundColor = day.isCurrentMonth ? "#242526" : "black";
+export const SelectionLine = observer(({date, player}: Props): React.ReactElement => {
+        const backgroundColor = isCurrentMonth(date) ? "#93979f" : "black";
         return (
             <>
-                {day.date >= new Date(player.freeTime.from) &&
-                 day.date <= new Date(player.freeTime.to) &&
-                 day.isCurrentMonth ? (
-                     <Line backgroundColor={player.color}/>
-                 ) : (
-                     <Line backgroundColor={backgroundColor}/>
-                 )}
+                {date >= player.freeTime.from &&
+                date <= player.freeTime.to &&
+                isCurrentMonth(date)
+                    ? <Line backgroundColor={player.color}/>
+                    : <Line backgroundColor={backgroundColor }/>
+                }
             </>
         );
     }
 );
-

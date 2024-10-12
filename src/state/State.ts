@@ -18,12 +18,4 @@ export class State {
         this.calendarState = new CalendarState(calendarRetriever);
         makeObservable(this);
     }
-    
-    public async init(): Promise<void> {
-        await this.calendarState.init();
-        console.log("State initialized");
-        console.log("calendar state" + JSON.stringify(this.calendarState));
-        console.log("player state" + JSON.stringify(this.playerState));
-        console.log("login state" + JSON.stringify(this.loginState));
-    }
 }

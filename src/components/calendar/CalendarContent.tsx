@@ -1,64 +1,51 @@
 import {observer} from "mobx-react";
+import React, {useEffect} from "react";
+import {CalendarBox} from "./CalendarBox";
 import {useStateContext} from "../../internal/StateContext";
-import React from "react";
-import {SelectionLine} from "./SelectionLine";
-import {DayNumber} from "./DayNumber";
-import {Day} from "../../models/internal/Day";
-import {Player} from "../../models/internal/Player";
+import {fetchCalendarData} from "../../retriever/CalendarRetriever";
 
-interface Props {
-    index: number;
-    day: Day;
-}
-
-export const CalendarContent = observer(({index, day}: Props): React.ReactElement => {
-        const {playerState} = useStateContext();
-        const {getIsFromSelected, getPlayers, setFromDate, setToDate} =
-            playerState;
-        
-        const handleClick = () => {
-            if (!getIsFromSelected) {
-                setFromDate(day.date);
-                return;
-            }
-            setToDate(day.date);
-        };
-        
-        return (
-            <div
-                key={index}
-                onClick={handleClick}
-                style={{
-                    width: "11%",
-                    backgroundColor: day.isCurrentMonth ? "#93979f" : "black",
-                    alignItems: "center",
-                    borderRadius: "16px",
-                    padding: "8px 12px",
-                    fontSize: "14px",
-                    margin: "5px",
-                    justifyContent: "center",
-                    boxShadow: day.isCurrentMonth
-                               ? "0 4px 10px rgba(0, 0, 0, 0.5)"
-                               : "none"
-                }}>
-                {
-                    day.isCurrentMonth
-                    ? (<DayNumber date={day.date?.getDate() ?? 0}/>)
-                    : null
-                }
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        height: "100px",
-                        flexWrap: "wrap"
-                    }}>
-                    {getPlayers.map((player: Player, index: number) => {
-                        return <SelectionLine key={index} player={player} day={day}/>;
-                    })}
-                </div>
-            </div>
-        );
-    }
+const Wrapper = ({children}: { children: React.ReactElement }): React.ReactElement => (
+    <div
+        style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            boxSizing: "border-box",
+        }}
+    >
+        {children}
+    </div>
 );
+
+export const CalendarContent = observer((): React.ReactElement => {
+    const {calendarState} = useStateContext();
+    const [days, setDays] = React.useState<Date[]>([]);
+    const [loading, setLoading] = React.useState(true);
+    const [error, setError] = React.useState<Error | null>(null);
+
+    useEffect(() => {
+        fetchCalendarData()
+            .then(r => r.map(date => JSON.parse(date) as Date[]))
+            .then(r => r.map(date => date.map(d => new Date(d))))
+            .then(r => r.match((v) => v, (e) => e))
+            .then(r => {
+                    if (r instanceof Error) {
+                        return setError(r);
+                    }
+                    return setDays(r);
+                }
+            )
+            .finally(() => setLoading(false))
+        ;
+    }, []);
+
+    return (
+        <Wrapper>
+            <>
+                {days.map((date: Date) => {
+                    return <CalendarBox key={date.toDateString()} date={date}/>;
+                })}
+            </>
+        </Wrapper>
+    );
+});

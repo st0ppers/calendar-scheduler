@@ -36,10 +36,10 @@ export const CalendarHeading = observer((): React.ReactElement => {
     
     return (
         <Wrapper>
-            {weekdays.map((weekday: string, index: number) => {
+            {weekdays.map((weekday: string) => {
                 return (
-                    <Blob key={index}>
-                        <p style={{color: "black", margin: "0px"}}>{weekday}</p>
+                    <Blob key={weekday}>
+                        <p style={{margin: "0px"}}>{weekday}</p>
                     </Blob>
                 );
             })}
