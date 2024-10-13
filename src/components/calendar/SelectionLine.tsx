@@ -31,7 +31,7 @@ export const SelectionLine = observer(({date, player}: Props): React.ReactElemen
                 date <= player.freeTime.to &&
                 isCurrentMonth(date)
                     ? <Line backgroundColor={player.color}/>
-                    : <Line backgroundColor={backgroundColor }/>
+                    : <Line backgroundColor={backgroundColor}/>
                 }
             </>
         );

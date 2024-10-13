@@ -9,7 +9,6 @@ import {Main} from "./components/main/Main";
 import {Register} from "./components/register/Register";
 import {MockPlayerRetriever} from "./mock/MockPlayerRetriever";
 import {MockLoginRetriever} from "./mock/MockLoginRetriever";
-import {MockCalendarRetriever} from "./mock/MockCalendarRetriever";
 
 export const App = observer(() => {
     const url = process.env.REACT_APP_API_URL ?? "";
@@ -23,14 +22,7 @@ export const App = observer(() => {
         ? new MockLoginRetriever()
         : new LoginRetriever(url);
     
-    const calendarRetriever =
-        process.env.NODE_ENV === "development"
-        ? new MockCalendarRetriever()
-        : new MockCalendarRetriever();
-    // : new CalendarRetriever(url);
-    
-    const state = new State(loginRetriever, playerRetriever, calendarRetriever);
-    void state.init();
+    const state = new State(loginRetriever, playerRetriever);
     return (
         <StateProvider state={state}>
             <BrowserRouter>

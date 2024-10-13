@@ -4,10 +4,24 @@ import {Player} from "../../models/internal/Player";
 import {SelectionLine} from "./SelectionLine";
 import {useStateContext} from "../../internal/StateContext";
 import {observer} from "mobx-react";
+import React from "react";
 
 interface Props {
     date: Date;
 }
+
+const LineWrapper = ({children}: React.PropsWithChildren<{}>): React.ReactElement => (
+    <div
+        style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100px",
+            flexWrap: "wrap"
+        }}>
+        {children}
+    </div>
+);
 
 export const CalendarBoxContent = observer(({date}: Props) => {
     const {playerState} = useStateContext();
@@ -16,18 +30,11 @@ export const CalendarBoxContent = observer(({date}: Props) => {
     return (
         <>
             <DayNumber date={date.getDate()} isCurrentMonth={isCurrentMonth(date)}/>
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    height: "100px",
-                    flexWrap: "wrap"
-                }}>
-                {getPlayers.map((player: Player) => {
-                    return <SelectionLine player={player} date={date}/>;
+            <LineWrapper>
+                {getPlayers.map((player: Player, index: number) => {
+                    return <SelectionLine key={`${player.name}-${player.color}-${index}`} player={player} date={date}/>;
                 })}
-            </div>
+            </LineWrapper>
         </>
     );
 });

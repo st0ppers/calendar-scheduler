@@ -1,5 +1,4 @@
 import {action, computed, makeObservable, observable} from "mobx";
-import {ICalendarRetriever} from "../mock/MockCalendarRetriever";
 import {Day} from "../models/internal/Day";
 
 export class CalendarState {

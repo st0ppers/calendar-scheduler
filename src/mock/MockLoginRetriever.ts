@@ -10,21 +10,23 @@ export class MockLoginRetriever implements ILoginRetriever {
                 player: {
                     color: "red",
                     freeTime: {from: new Date("2024-08-15"), to: new Date("2024-08-20")},
-                    name: "Petur"
+                    name: "Petur",
+                    id: "2"
                 },
                 expiration: 1,
                 token: "token"
             } as Login);
         });
     }
-    
+
     register(request: RegisterRequest): Promise<Login> {
         return new Promise<Login>((resolve, _) => {
             resolve({
                 player: {
                     color: "red",
                     freeTime: {from: new Date("2024-08-15"), to: new Date("2024-08-20")},
-                    name: "Petur"
+                    name: "Petur",
+                    id: "2"
                 },
                 expiration: 1,
                 token: "token"

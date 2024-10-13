@@ -11,7 +11,7 @@ export class MockPlayerRetriever implements IPlayerRetriever {
             freeTime: {from: new Date("2024-08-01"), to: new Date("2024-08-03")}
         },
         {
-            id: "2",
+            id: "6",
             color: "Black",
             name: "Nasko",
             freeTime: {from: new Date("2024-08-03"), to: new Date("2024-08-04")}

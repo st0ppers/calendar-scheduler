@@ -4,18 +4,16 @@ import {LoginState} from "./LoginState";
 import {PlayerState} from "./PlayerState";
 import {makeObservable} from "mobx";
 import {CalendarState} from "./CalendarState";
-import {ICalendarRetriever} from "../mock/MockCalendarRetriever";
 
 export class State {
     public readonly loginState: LoginState;
     public readonly playerState: PlayerState;
     public readonly calendarState: CalendarState;
-    
-    public constructor(loginRetriever: ILoginRetriever, playerRetriever: IPlayerRetriever,
-        calendarRetriever: ICalendarRetriever) {
+
+    public constructor(loginRetriever: ILoginRetriever, playerRetriever: IPlayerRetriever) {
         this.loginState = new LoginState(loginRetriever, this);
         this.playerState = new PlayerState(playerRetriever, this);
-        this.calendarState = new CalendarState(calendarRetriever);
+        this.calendarState = new CalendarState();
         makeObservable(this);
     }
 }

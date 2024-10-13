@@ -33,16 +33,13 @@ const Blob = ({children}: React.PropsWithChildren<{}>): React.ReactElement => (
 
 export const CalendarHeading = observer((): React.ReactElement => {
     const weekdays: string[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-    
     return (
         <Wrapper>
-            {weekdays.map((weekday: string) => {
-                return (
-                    <Blob key={weekday}>
-                        <p style={{margin: "0px"}}>{weekday}</p>
-                    </Blob>
-                );
-            })}
+            {weekdays.map((weekday: string, index: number) => (
+                <Blob key={`${weekday}-${index}`}>
+                    <p style={{margin: "0px"}}>{weekday}</p>
+                </Blob>
+            ))}
         </Wrapper>
     );
 });

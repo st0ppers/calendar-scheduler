@@ -5,9 +5,7 @@ import {Player} from "../../models/internal/Player";
 import {SubmitButton} from "../calendar/SubmitButton";
 import {ResetButton} from "../ResetButton";
 
-const Wrapper = ({
-    children
-}: React.PropsWithChildren<{}>): React.ReactElement => (
+const Wrapper = ({children}: React.PropsWithChildren<{}>): React.ReactElement => (
     <div
         style={{
             width: "max-content",
@@ -31,12 +29,10 @@ export const Legend = observer((): React.ReactElement => {
             <Wrapper>
                 {playerState.getPlayers.map((player: Player) => {
                     return (
-                        <>
-                            <p style={{color: "black"}}>
-                                {player.name} -{"\u00A0"}{" "}
-                                <span style={{color: player.color}}>{player.color}</span>
-                            </p>
-                        </>
+                        <p key={`${player.id}-${player.name}`} style={{color: "black"}}>
+                            {player.name} -{"\u00A0"}{" "}
+                            <span style={{color: player.color}}>{player.color}</span>
+                        </p>
                     );
                 })}
             </Wrapper>

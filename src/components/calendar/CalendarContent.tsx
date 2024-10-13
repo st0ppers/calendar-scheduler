@@ -1,10 +1,9 @@
 import {observer} from "mobx-react";
 import React, {useEffect} from "react";
 import {CalendarBox} from "./CalendarBox";
-import {useStateContext} from "../../internal/StateContext";
 import {fetchCalendarData} from "../../retriever/CalendarRetriever";
 
-const Wrapper = ({children}: { children: React.ReactElement }): React.ReactElement => (
+const Wrapper = ({children}: React.PropsWithChildren<{}>): React.ReactElement => (
     <div
         style={{
             display: "flex",
@@ -18,7 +17,6 @@ const Wrapper = ({children}: { children: React.ReactElement }): React.ReactEleme
 );
 
 export const CalendarContent = observer((): React.ReactElement => {
-    const {calendarState} = useStateContext();
     const [days, setDays] = React.useState<Date[]>([]);
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState<Error | null>(null);
@@ -41,11 +39,9 @@ export const CalendarContent = observer((): React.ReactElement => {
 
     return (
         <Wrapper>
-            <>
-                {days.map((date: Date) => {
-                    return <CalendarBox key={date.toDateString()} date={date}/>;
-                })}
-            </>
+            {days.map((date: Date, index: number) => (
+                <CalendarBox key={`${date}-${index}`} date={date}/>
+            ))}
         </Wrapper>
     );
 });
