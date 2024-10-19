@@ -2,6 +2,7 @@ import {observer} from "mobx-react";
 import React from "react";
 import {Player} from "../../models/internal/Player";
 import {isCurrentMonth} from "../../internal/utils/Date";
+import {useCalendar} from "../../internal/CalendarStateContext";
 
 interface Props {
     date: Date;
@@ -24,12 +25,13 @@ const Line = ({backgroundColor}: ColorProps): React.ReactElement => (
     />
 );
 export const SelectionLine = observer(({date, player}: Props): React.ReactElement => {
-        const backgroundColor = isCurrentMonth(date) ? "#93979f" : "black";
+        const {getLongMonth} = useCalendar();
+        const backgroundColor = isCurrentMonth(date, getLongMonth()) ? "#93979f" : "black";
         return (
             <>
                 {date >= player.freeTime.from &&
                 date <= player.freeTime.to &&
-                isCurrentMonth(date)
+                isCurrentMonth(date, getLongMonth())
                     ? <Line backgroundColor={player.color}/>
                     : <Line backgroundColor={backgroundColor}/>
                 }

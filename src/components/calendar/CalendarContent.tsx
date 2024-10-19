@@ -2,6 +2,7 @@ import {observer} from "mobx-react";
 import React, {useEffect} from "react";
 import {CalendarBox} from "./CalendarBox";
 import {fetchCalendarData} from "../../retriever/CalendarRetriever";
+import {useCalendar} from "../../internal/CalendarStateContext";
 
 const Wrapper = ({children}: React.PropsWithChildren<{}>): React.ReactElement => (
     <div
@@ -17,12 +18,13 @@ const Wrapper = ({children}: React.PropsWithChildren<{}>): React.ReactElement =>
 );
 
 export const CalendarContent = observer((): React.ReactElement => {
+    const {date} = useCalendar();
     const [days, setDays] = React.useState<Date[]>([]);
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState<Error | null>(null);
 
     useEffect(() => {
-        fetchCalendarData()
+        fetchCalendarData(date)
             .then(r => r.map(date => JSON.parse(date) as Date[]))
             .then(r => r.map(date => date.map(d => new Date(d))))
             .then(r => r.match((v) => v, (e) => e))
@@ -35,7 +37,7 @@ export const CalendarContent = observer((): React.ReactElement => {
             )
             .finally(() => setLoading(false))
         ;
-    }, []);
+    }, [date]);
 
     return (
         <Wrapper>

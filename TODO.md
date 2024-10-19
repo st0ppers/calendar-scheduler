@@ -1,7 +1,8 @@
 # Todos
 
-- [ ] when pasting username/password, remove whitespace
-- [ ] make it possible to select multiple days
+- [ ] When pasting username/password, remove whitespace
+- [ ] Make it possible to select multiple days
 - [ ] Make token refresh
-- [ ] Routing doesn't work when not entered from base url
-- [ ] Remove box-shadow from css because now the background is black(or maybe try with white color)
+- [ ] Routing doesn't work when not entered from base url <b><span style="color:red">(error is from server not front end)</span><b>
+- [x] Make it possible to move months
+- [x] Make it possible select more than one free time

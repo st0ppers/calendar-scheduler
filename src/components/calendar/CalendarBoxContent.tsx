@@ -5,6 +5,7 @@ import {SelectionLine} from "./SelectionLine";
 import {useStateContext} from "../../internal/StateContext";
 import {observer} from "mobx-react";
 import React from "react";
+import {useCalendar} from "../../internal/CalendarStateContext";
 
 interface Props {
     date: Date;
@@ -24,12 +25,13 @@ const LineWrapper = ({children}: React.PropsWithChildren<{}>): React.ReactElemen
 );
 
 export const CalendarBoxContent = observer(({date}: Props) => {
+    const {getLongMonth} = useCalendar();
     const {playerState} = useStateContext();
     const {getPlayers} = playerState;
 
     return (
         <>
-            <DayNumber date={date.getDate()} isCurrentMonth={isCurrentMonth(date)}/>
+            <DayNumber date={date.getDate()} isCurrentMonth={isCurrentMonth(date, getLongMonth())}/>
             <LineWrapper>
                 {getPlayers.map((player: Player, index: number) => {
                     return <SelectionLine key={`${player.name}-${player.color}-${index}`} player={player} date={date}/>;
